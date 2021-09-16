@@ -20,6 +20,7 @@ import com.ediads.cursomc3.domain.PagamentoComCartao;
 import com.ediads.cursomc3.domain.Pedido;
 import com.ediads.cursomc3.domain.Produto;
 import com.ediads.cursomc3.domain.enums.EstadoPagamento;
+import com.ediads.cursomc3.domain.enums.Perfil;
 import com.ediads.cursomc3.domain.enums.TipoCliente;
 import com.ediads.cursomc3.repositories.CategoriaRepository;
 import com.ediads.cursomc3.repositories.CidadeRepository;
@@ -123,16 +124,22 @@ public void instantiateTestDatabase() throws ParseException {
 	cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 	
 	Cliente cli1 = new Cliente(null, "MariaSilva", "ecarlos.leite@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
-	
 	cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+	
+	Cliente cli2 = new Cliente(null, "Ana Costa", "edicarlos101821@gmail.com", "19622478808", TipoCliente.PESSOAFISICA, pe.encode("123"));
+	cli1.getTelefones().addAll(Arrays.asList("33216062", "97551733"));
+	cli2.addPerfil(Perfil.ADMIN);
+	
 	
 	Endereco e1 = new Endereco(null, "Rua das Flores", "300", "Apto 303", "Jardin", "38220834", cli1, c1);
 	Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+	Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "11177012", cli2, c2);
 	
 	cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+	cli2.getEnderecos().addAll(Arrays.asList(e3));
 	
-	clienteRepository.saveAll(Arrays.asList(cli1));
-	enderecoRepository.saveAll(Arrays.asList(e1, e2));
+	clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+	enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 	
 	SimpleDateFormat stf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	
